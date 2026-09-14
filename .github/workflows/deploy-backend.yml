@@ -1,4 +1,4 @@
-﻿name: CI/CD - Build, Push & Deploy ozcraft-backend
+name: CI/CD - Build, Push & Deploy ozcraft-backend
 
 on:
   push:
@@ -75,8 +75,18 @@ jobs:
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           fi
 
+      - name: Configure environment
+        run: |
+          echo "IMAGE_NAME=${IMAGE_NAME}" > .env
+          echo "PORT=5000" >> .env
+          echo "OLLAMA_BASE_URL=${{ secrets.OLLAMA_BASE_URL || 'https://ollama.com/api' }}" >> .env
+          echo "OLLAMA_API_KEY=${{ secrets.OLLAMA_API_KEY }}" >> .env
+          echo "CORS_ORIGIN=https://rifkikesepara.github.io,https://ozcraft-oracle.rifkikesepara7.workers.dev,http://localhost:5173" >> .env
+
       - name: Pull latest image
         run: docker compose pull
 
       - name: Run container via Docker Compose
+        env:
+          OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
         run: docker compose up -d --remove-orphans
