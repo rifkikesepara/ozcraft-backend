@@ -1,0 +1,19 @@
+﻿{
+  "name": "ozcraft-backend",
+  "version": "1.0.0",
+  "description": "Express.js backend proxy for OzCraft Ollama API integration",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": ["express", "ollama", "resume-builder", "ozcraft"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
